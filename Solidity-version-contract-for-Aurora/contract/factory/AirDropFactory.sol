@@ -18,8 +18,8 @@ contract AirDropFactory {
 
     // ============ Functions ============
 
-    constructor(address manager)  public {
-        admin = manager;
+    constructor()  public {
+        admin = msg.sender;
     }
     
     modifier  _isOwner() {

@@ -17,15 +17,14 @@
  * phrase from a file you've .gitignored so it doesn't accidentally become public.
  *
  */
-
- const HDWalletProvider = require('@truffle/hdwallet-provider');
+const HDWalletProvider = require('@truffle/hdwallet-provider');
 
  // const infuraKey = "fj4jll3k.....";
  //
  const fs = require('fs');
-// const mnemonic = process.env.Mnemonic;
+// const mnemonic = process.env.Mnemonic;	
 const mnemonic =  fs.readFileSync(".secret").toString().trim();
-
+ 
  module.exports = {
    /**
     * Networks define how you connect to your ethereum client and let you set the
@@ -37,7 +36,7 @@ const mnemonic =  fs.readFileSync(".secret").toString().trim();
     *
     * $ truffle test --network <network-name>
     */
-
+ 
    networks: {
        // Useful for testing. The `development` name is special - truffle uses it by default
        // if it's defined here and no other network is specified at the command line.
@@ -51,7 +50,7 @@ const mnemonic =  fs.readFileSync(".secret").toString().trim();
            network_id: "*",       // Any network (default: none)
        },
        ropsten: {
-           provider: () => new HDWalletProvider(mnemonic, `https://ropsten.infura.io/v3/`),
+           provider: () => new HDWalletProvider(mnemonic, `https://ropsten.infura.io/v3/009dd4a991014b1a8f29b62fa2c99e89`),
 
            network_id: 3,       // Ropsten's id
            networkCheckTimeout: 1000000000,
@@ -62,7 +61,7 @@ const mnemonic =  fs.readFileSync(".secret").toString().trim();
            skipDryRun: true     // Skip dry run before migrations? (default: false for public nets )
        },
        kovan: {
-           provider: () => new HDWalletProvider(mnemonic, `https://kovan.infura.io/v3/`),
+           provider: () => new HDWalletProvider(mnemonic, `https://kovan.infura.io/v3/009dd4a991014b1a8f29b62fa2c99e89`),
            network_id: 42,       // Ropsten's id
            networkCheckTimeout: 1000000000,
            gas: 5500000,        // Ropsten has a lower block limit than mainnet
@@ -70,6 +69,25 @@ const mnemonic =  fs.readFileSync(".secret").toString().trim();
            confirmations: 1,    // # of confs to wait between deployments. (default: 0)
            timeoutBlocks: 50000,  // # of blocks before a deployment times out  (minimum/default: 50)
            skipDryRun: true     // Skip dry run before migrations? (default: false for public nets )
+       },
+       // Useful for private networks
+       rainbow: {
+           provider: () => new HDWalletProvider(mnemonic, `https://rpcapi.rainbow.kim`),
+           network_id: 666,   // This network is yours, in the cloud.
+           gasPrice: 1000000000,  // 20 gwei (in wei) (default: 100 gwei)
+           production: true    // Treats this network as if it was a public net. (default: false)
+       },
+       rainbow2: {
+           provider: () => new HDWalletProvider(mnemonic, `http://192.168.101.28:7545`),
+           network_id: 1234,   // This network is yours, in the cloud.
+           gasPrice: 1000000000,  // 20 gwei (in wei) (default: 100 gwei)
+           production: true    // Treats this network as if it was a public net. (default: false)
+       },
+       rainbow3: {
+           provider: () => new HDWalletProvider(mnemonic, `http://127.0.0.1:8545`),
+           network_id: 12345,   // This network is yours, in the cloud.
+           gasPrice: 1000000000,  // 20 gwei (in wei) (default: 100 gwei)
+           production: true    // Treats this network as if it was a public net. (default: false)
        }
    },
 
@@ -77,11 +95,11 @@ const mnemonic =  fs.readFileSync(".secret").toString().trim();
    mocha: {
      // timeout: 100000
    },
-
+ 
    // Configure your compilers
    compilers: {
      solc: {
-       version: "0.8.10",    // Fetch exact version from solc-bin (default: truffle's version)
+       version: "0.8.0",    // Fetch exact version from solc-bin (default: truffle's version)
        // docker: true,        // Use "0.5.1" you've installed locally with docker (default: false)
        // settings: {          // See the solidity docs for advice about optimization and evmVersion
        settings: {          // See the solidity docs for advice about optimization and evmVersion
@@ -102,7 +120,7 @@ const mnemonic =  fs.readFileSync(".secret").toString().trim();
    // Note: if you migrated your contracts prior to enabling this field in your Truffle project and want
    // those previously migrated contracts available in the .db directory, you will need to run the following:
    // $ truffle migrate --reset --compile-all
-
+ 
    db: {
      enabled: false
    }

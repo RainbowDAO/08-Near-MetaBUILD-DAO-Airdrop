@@ -5,7 +5,7 @@ pragma solidity ^0.8.0;
 import "../../node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "../lib/SafeMath.sol";
 import "../lib/TransferHelper.sol";
-import {Context} from "../airdrop/airdrop.sol";
+import {Context} from "./airdrop.sol";
 
 
 
