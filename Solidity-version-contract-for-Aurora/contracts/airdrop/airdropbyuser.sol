@@ -85,6 +85,7 @@ contract airdropbyuser is Context {
     function gettoken() external returns(bool){
          require(block.timestamp < endtime);
          TransferHelper.safeTransfer(token,msg.sender, allowances[msg.sender]);
+         allowances[msg.sender] = 0;
          return true;
     }
     function gettokenbyOwner() external _isOwner returns(bool){

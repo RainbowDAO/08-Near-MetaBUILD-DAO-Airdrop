@@ -24,6 +24,7 @@ contract airdrop is Context {
     address public admin;
     
     address public token;
+    address[] public user;
     mapping (address => uint256) private allowances;
     event AdminChange(address indexed Admin, address indexed newAdmin);
     constructor(address manager, address _token)  public {

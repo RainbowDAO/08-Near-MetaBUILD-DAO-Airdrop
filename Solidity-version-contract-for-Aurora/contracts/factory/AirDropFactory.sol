@@ -9,6 +9,7 @@ contract AirDropFactory {
     
 
     address public admin;
+    mapping(address => address[]) public _USER_STD_REGISTRY_;
    
     // ============ Events ============
 
@@ -31,16 +32,21 @@ contract AirDropFactory {
         emit AdminChange(msg.sender,manager);
     }
 
-     function createAirDrop2(address manager, address _token) external returns (address newERC20) {
+     function createAirDrop(address manager, address _token) external returns (address ) {
         address _airdrop = address (new airdrop(manager,_token));
+        _USER_STD_REGISTRY_[msg.sender].push(_airdrop);
         emit NewAirDrop(_airdrop, msg.sender, false);
         return _airdrop;
     }
     
-    function createAirDrop2(address manager, address _token,uint256 _time) external returns (address newERC20) {
+    function createAirDropByUser(address manager, address _token,uint256 _time) external returns (address ) {
         address _airdrop =address (new airdropbyuser(manager,_token,_time));
+        _USER_STD_REGISTRY_[msg.sender].push(_airdrop);
         emit NewAirDrop(_airdrop, msg.sender, false);
         return _airdrop;
     }
-   
+   function getRegistry(address user) public view returns (address[] memory )
+    {
+        return _USER_STD_REGISTRY_[user];
+    }
 }
