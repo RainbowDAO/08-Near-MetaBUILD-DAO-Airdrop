@@ -9,7 +9,7 @@ contract AirDropFactoryOrchestrator is Initializable {
     address airDropFactory;
     function init() external initializer {
 
-        airDropFactory = address(new AirDropFactory());
+        airDropFactory = address(new AirDropFactory(0x519f1c77304A67dD530b4ECAb21e184A290147E1,0));
 
         
     }
