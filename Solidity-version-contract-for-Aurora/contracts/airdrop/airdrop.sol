@@ -22,7 +22,7 @@ contract airdrop is Context {
   using SafeMath for uint256;
   // using Address for address;
     address public admin;
-    
+    uint256 public creattime;
     address public token;
     address[] public user;
     mapping (address => uint256) private allowances;
@@ -46,9 +46,10 @@ contract airdrop is Context {
         uint256 balance =IERC20(token).balanceOf(address (this));
         uint256 _amountSum = amount.mul(_addresses.length);
         require(_amountSum < balance);
-    
+        creattime = block.timestamp;
         for (uint8 i; i < _addresses.length; i++) {
             TransferHelper.safeTransfer(token,_addresses[i], amount);
+            user.push(_addresses[i]);
             allowances[_addresses[i]] = amount;
         }
         return true;
@@ -61,13 +62,19 @@ contract airdrop is Context {
           _amountSum.add(amounts[i]);
         }
         require(_amountSum < balance);
-    
+        creattime = block.timestamp;
         for (uint8 i; i < _addresses.length; i++){
             TransferHelper.safeTransfer(token,_addresses[i], amounts[i]);
+            user.push(_addresses[i]);
             allowances[_addresses[i]] = amounts[i];
         } 
         return true; 
     }
+    function getUesr() public view returns (address[] memory )
+    {
+        return user;
+    }
+
 
     function getreceived(address _addresses) external view returns (uint256){
         

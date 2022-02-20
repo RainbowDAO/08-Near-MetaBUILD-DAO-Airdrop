@@ -2,9 +2,9 @@
 
 ## Contract introduction
 
-- AirDropFactory: Users can create their own Token through factory contracts,displays a list of Token  information,It's a collection of all the contracts.
-- airdropbyuser: Used to manage permissions between accounts or contracts, which can be changed by proposal.
-- airdrop: It is used to save the basic information and types of dao.
+- AirDropFactory: Users can create their own airdrop through factory contracts,displays a list of airdrop information,It's a collection of all the contracts.
+- airdropbyuser:  It is used to save the basic information and types of airdrop and get airdrop。
+- airdrop: It is used to save the basic information and types of airdrop.
 
 ## Dependencies
 
@@ -20,12 +20,13 @@
 
 #### AirDropFactory
 
-0xA36B967596CE46caC343B2054638DDD2B2B3eedd
+0xE19233E22863480784A1E5eE54eEEe161230d225
 
 ## Installing
 
 ```
-git clone https://github.com/RainbowDAO/04-Hackathon-DAO-factory.git
+git clone https://github.com/RainbowDAO/08-Near-MetaBUILD-DAO-Airdrop.git
+cd 08-Near-MetaBUILD-DAO-Airdrop/Solidity-version-contract-for-Aurora
 npm install
 ```
 
@@ -44,6 +45,11 @@ You will deploy contracts
 
 - AirDropFactory
 
-## Create a Token 
+## Create a AirDrop 
 
-The creatAirDrop  in the AirDropMain contract creates a AirDrop  of its own, amount.
+The creatAirDrop  in the AirDropFactory contract creates a AirDrop  of its own, amount,token.
+
+~~~
+createAirDrop() or createAirDropByUser()
+~~~
+
