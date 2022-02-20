@@ -93,8 +93,10 @@ contract airdropbyuser is Context {
     // }
     function gettoken() external returns(bool){
          require(block.timestamp < endtime);
+         userallowances[msg.sender].amounts = allowances[msg.sender];
          TransferHelper.safeTransfer(token,msg.sender, allowances[msg.sender]);
          allowances[msg.sender] = 0;
+         userallowances[msg.sender].gettime = block.timestamp;
          
          return true;
     }
@@ -106,13 +108,22 @@ contract airdropbyuser is Context {
         require(block.timestamp > endtime);
         uint256 balance =IERC20(token).balanceOf(address (this));
          TransferHelper.safeTransfer(token,msg.sender, balance);
-        userallowances[msg.sender].gettime = block.timestamp;
-        userallowances[msg.sender].amounts = balance;
+        
          return true;
     }
-    function getreceived(address _addresses) external view returns (uint256){
+    function getreceived(address _addresses) external view returns (userinfo memory){
         
-        return allowances[_addresses] ;
+        return userallowances[_addresses] ;
+        
+    }
+    function gettime(address _addresses) external view returns (uint256){
+        
+        return userallowances[_addresses].gettime ;
+        
+    }
+    function getamount(address _addresses) external view returns (uint256){
+        
+        return userallowances[_addresses].amounts ;
         
     }
  
