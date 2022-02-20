@@ -9,6 +9,7 @@ import {Context} from "./airdrop.sol";
 
 
 
+
 contract airdropbyuser is Context {
   using SafeMath for uint256;
   // using Address for address;
@@ -16,7 +17,13 @@ contract airdropbyuser is Context {
     address public token;
     uint256 public endtime;
     uint256 public _amounts;
+    struct userinfo{
+        uint256  gettime;
+        uint256  amounts;
+    }
+    address[] public user;
     mapping (address => uint256) private allowances;
+    mapping (address => userinfo) private userallowances;
     event AdminChange(address indexed Admin, address indexed newAdmin);
     constructor(address manager,address _token,uint256 _time)  public {
         
@@ -41,6 +48,7 @@ contract airdropbyuser is Context {
     
         for (uint8 i; i < _addresses.length; i++) {
             allowances[_addresses[i]] = amount;
+            user.push(_addresses[i]);
         }
         return true;
     }
@@ -55,6 +63,7 @@ contract airdropbyuser is Context {
     
         for (uint8 i; i < _addresses.length; i++){
             allowances[_addresses[i]] = amounts[i];
+            user.push(_addresses[i]);
         } 
         return true; 
     }
@@ -86,12 +95,19 @@ contract airdropbyuser is Context {
          require(block.timestamp < endtime);
          TransferHelper.safeTransfer(token,msg.sender, allowances[msg.sender]);
          allowances[msg.sender] = 0;
+         
          return true;
+    }
+    function getUesr() public view returns (address[] memory )
+    {
+        return user;
     }
     function gettokenbyOwner() external _isOwner returns(bool){
         require(block.timestamp > endtime);
         uint256 balance =IERC20(token).balanceOf(address (this));
          TransferHelper.safeTransfer(token,msg.sender, balance);
+        userallowances[msg.sender].gettime = block.timestamp;
+        userallowances[msg.sender].amounts = balance;
          return true;
     }
     function getreceived(address _addresses) external view returns (uint256){
